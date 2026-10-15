@@ -35,6 +35,6 @@ class CodeMaker
 
     return if correct_guess?(last_guess, code)
 
-    check_pegs(last_guess, code)
+    board.store_feedback(check_pegs(last_guess, code))
   end
 end
