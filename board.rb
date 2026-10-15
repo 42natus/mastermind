@@ -14,11 +14,11 @@ class Board
   end
 
   def store_code(pegs)
-    @code = code
+    @code = pegs
   end
 
   def store_guess(pegs)
-    @guesses << guess
+    @guesses << pegs
   end
 
   def store_feedback(pegs)
