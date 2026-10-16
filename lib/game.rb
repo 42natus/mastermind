@@ -14,9 +14,9 @@ class Game
 
   def play
     @code_maker.place_code(@board)
-    p @board.code
 
     12.times do
+      puts ''
       @board.display
       
       @code_breaker.guess(@board)
@@ -24,9 +24,16 @@ class Game
       feedback = @code_maker.give_feedback(@board)
       
       if feedback.nil?
+        puts ''
         @board.display(gameover = true)
-        break
+        puts "\nBRAVO! YOU GOT IT!!"
+        return
       end
     end
+
+    puts ''
+    @board.display(gameover = true)
+
+    puts "\nBetter luck next time..."
   end
 end

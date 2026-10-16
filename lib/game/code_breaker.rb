@@ -19,7 +19,7 @@ class CodeBreaker
     guess = []
 
     until valid?(guess)
-      puts "Enter your guess:"
+      print "Enter your guess: "
       guess = sanitize(gets.chomp)
     end
 
