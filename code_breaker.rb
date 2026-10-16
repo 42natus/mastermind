@@ -16,7 +16,7 @@ class CodeBreaker
   end
 
   def guess(board)
-    guess = ''
+    guess = []
 
     until valid?(guess)
       puts "Enter your guess:"
