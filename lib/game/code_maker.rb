@@ -17,13 +17,21 @@ class CodeMaker
   def check_pegs(pegs, code)
     feedback = []
 
+    # check if each peg's in the code AND in the correct position
     pegs.each_with_index do |peg, position|
-      if code.include?(peg) && code[position] == peg
+      if code[position] == peg
         feedback.push('x')
-        next
+        # value ignorable cos it's been assessed — won't affect next check
+        code[position] = '_'
       end
+    end
 
-      feedback.push('o') if code.include?(peg) && !(code[position] == peg)
+    # any pegs present in the code after last check are in the wrong position
+    pegs.each_with_index do |peg, position|
+      if code.include?(peg)
+        feedback.push('o')
+        code[code.index(peg)] = '_'
+      end
     end
 
     feedback
@@ -32,7 +40,7 @@ class CodeMaker
   def give_feedback(board)
     last_guess = board.guesses[-1]
 
-    code = board.code
+    code = board.code.clone
 
     return if correct_guess?(last_guess, code)
 
