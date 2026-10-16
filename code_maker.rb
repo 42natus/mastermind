@@ -5,9 +5,9 @@ class CodeMaker
   def initialize; end
   
   def place_code(board)
-    code = @board.pegs.sample(4)
+    code = board.pegs.sample(4)
     
-    @board.store_code(code)
+    board.store_code(code)
   end
 
   def correct_guess?(guess, code)
@@ -23,7 +23,7 @@ class CodeMaker
         next
       end
 
-      feedback.push('o') if code.include?(peg) && !code[position] == peg
+      feedback.push('o') if code.include?(peg) && !(code[position] == peg)
     end
 
     feedback
@@ -31,6 +31,7 @@ class CodeMaker
 
   def give_feedback(board)
     last_guess = board.guesses[-1]
+
     code = board.code
 
     return if correct_guess?(last_guess, code)
