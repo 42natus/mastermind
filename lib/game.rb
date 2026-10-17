@@ -12,28 +12,33 @@ class Game
     @code_breaker = CodeBreaker.new
   end
 
+  def play_round
+    12.times do
+      @board.display
+
+      @code_breaker.guess(@board)
+
+      feedback = @code_maker.give_feedback(@board)
+
+      next unless feedback.nil?
+
+      @code_breaker.correct_guess = true
+
+      break
+    end
+  end
+
   def play
     @code_maker.place_code(@board)
 
-    12.times do
-      puts ''
-      @board.display
-      
-      @code_breaker.guess(@board)
-      
-      feedback = @code_maker.give_feedback(@board)
-      
-      if feedback.nil?
-        puts ''
-        @board.display(gameover = true)
-        puts "\nBRAVO! YOU GOT IT!!"
-        return
-      end
+    play_round
+
+    @board.display(gameover: true)
+
+    if @code_breaker.correct_guess
+      puts "\nBRAVO! YOU GOT IT!!"
+    else
+      puts "\nBetter luck next time..."
     end
-
-    puts ''
-    @board.display(gameover = true)
-
-    puts "\nBetter luck next time..."
   end
 end

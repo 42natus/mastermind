@@ -1,4 +1,4 @@
-#frozen_string_literal: true
+# frozen_string_literal: true
 
 # This is the board upon which the game will be played. The codemaker sets the
 # code and the codebreaker makes guesses on this board.
@@ -6,7 +6,7 @@ class Board
   attr_reader :pegs, :code, :guesses
 
   def initialize
-    @pegs = %w(1 2 3 4 5 6)
+    @pegs = %w[1 2 3 4 5 6]
 
     @code = []
     @guesses = []
@@ -35,10 +35,10 @@ class Board
 
   def print_feedback(feedback)
     # a slot in the feedback area with no peg is denoted by '_'
-    feedback = feedback.fill('_', feedback.length, 4 - feedback.length)
+    feedback.fill('_', feedback.length, 4 - feedback.length)
 
     feedback = feedback.shuffle
-    
+
     print ' ( '
 
     feedback.each { |peg| print "#{peg} " }
@@ -54,11 +54,7 @@ class Board
     print "]\n"
   end
 
-  def display(gameover = false)
-    blanks = 12 - @guesses.length
-    
-    puts '----- MASTERMIND -----'
-
+  def print_pegs
     (0...@guesses.length).each do |i|
       print_guess(@guesses[i])
 
@@ -70,10 +66,16 @@ class Board
 
       puts ''
     end
+  end
 
-    blanks.times do
-      puts '| _ _ _ _ | ( _ _ _ _ )'
-    end
+  def display(gameover: false)
+    blanks = 12 - @guesses.length
+
+    puts "\n----- MASTERMIND -----"
+
+    print_pegs
+
+    blanks.times { puts '| _ _ _ _ | ( _ _ _ _ )' }
 
     if gameover
       reveal_code
