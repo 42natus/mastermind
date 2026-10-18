@@ -1,15 +1,14 @@
 # frozen_string_literal: true
 
-# The code maker uses a combination of the pegs available to set a code
-class CodeMaker
-  def place_code(board)
-    code = board.pegs.sample(4)
+# This module contains methods that check/validate some data
+module Verifiable
+  def valid_code?(code)
+    return false if code.any? { |peg| !%w[1 2 3 4 5 6].include?(peg) }
 
-    board.store_code(code)
-  end
+    # must use 4 integers
+    code = code.join
 
-  def correct_guess?(guess, code)
-    guess.eql?(code)
+    code.length == 4 && code.length == code.to_i.to_s.length
   end
 
   def correct_position(pegs, code)
@@ -51,15 +50,11 @@ class CodeMaker
     feedback.flatten
   end
 
-  def give_feedback(board)
+  def valid_feedback?(board, feedback)
     last_guess = board.guesses[-1]
 
     code = board.code.clone
 
-    if correct_guess?(last_guess, code)
-      board.store_feedback(%w[x x x x])
-    else
-      board.store_feedback(check_pegs(last_guess, code))
-    end
+    check_pegs(last_guess, code).sort == feedback.sort
   end
 end
