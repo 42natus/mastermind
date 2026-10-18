@@ -13,16 +13,15 @@ class CodeBreaker
     guess.gsub(' ', '').chars
   end
 
-  def valid?(guess)
-    guess = guess.join
-
-    guess.length == 4 && guess.length == guess.to_i.to_s.length
+  def valid?(guess, pegs)
+    guess.length == 4 && guess.none? { |ch| !pegs.include?(ch) }
   end
 
   def guess(board)
     guess = []
+    pegs = board.pegs
 
-    until valid?(guess)
+    until valid?(guess, pegs)
       print 'Enter your guess: '
       guess = sanitize(gets.chomp)
     end
