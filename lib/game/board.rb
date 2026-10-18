@@ -46,14 +46,6 @@ class Board
     print ')'
   end
 
-  def reveal_code
-    print '[ '
-
-    code.each { |peg| print "#{peg} " }
-
-    print "]\n"
-  end
-
   def print_pegs
     (0...@guesses.length).each do |i|
       print_guess(@guesses[i])
@@ -64,14 +56,24 @@ class Board
     end
   end
 
-  def display(gameover: false)
-    blanks = 12 - @guesses.length
+  def print_blanks(number)
+    number.times { puts '| _ _ _ _ | ( _ _ _ _ )' }
+  end
 
+  def reveal_code
+    print '[ '
+
+    code.each { |peg| print "#{peg} " }
+
+    print "]\n"
+  end
+
+  def display(gameover: false)
     puts "\n----- MASTERMIND -----"
 
     print_pegs
 
-    blanks.times { puts '| _ _ _ _ | ( _ _ _ _ )' }
+    print_blanks(12 - @guesses.length)
 
     if gameover
       reveal_code
