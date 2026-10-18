@@ -3,7 +3,7 @@
 # This is the board upon which the game will be played. The codemaker sets the
 # code and the codebreaker makes guesses on this board.
 class Board
-  attr_reader :pegs, :code, :guesses
+  attr_reader :pegs, :code, :guesses, :feedbacks
 
   def initialize
     @pegs = %w[1 2 3 4 5 6]
@@ -58,11 +58,7 @@ class Board
     (0...@guesses.length).each do |i|
       print_guess(@guesses[i])
 
-      if @feedbacks[i].nil?
-        print ' ( _ _ _ _ )'
-      else
-        print_feedback(@feedbacks[i])
-      end
+      print_feedback(@feedbacks[i])
 
       puts ''
     end

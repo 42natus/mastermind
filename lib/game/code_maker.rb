@@ -56,8 +56,10 @@ class CodeMaker
 
     code = board.code.clone
 
-    return if correct_guess?(last_guess, code)
-
-    board.store_feedback(check_pegs(last_guess, code))
+    if correct_guess?(last_guess, code)
+      board.store_feedback(%w[x x x x])
+    else
+      board.store_feedback(check_pegs(last_guess, code))
+    end
   end
 end

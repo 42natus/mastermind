@@ -18,9 +18,9 @@ class Game
 
       @code_breaker.guess(@board)
 
-      feedback = @code_maker.give_feedback(@board)
+      @code_maker.give_feedback(@board)
 
-      next unless feedback.nil?
+      next unless @board.feedbacks.last.eql?(%w[x x x x])
 
       @code_breaker.correct_guess = true
 
