@@ -37,8 +37,6 @@ class Board
     # a slot in the feedback area with no peg is denoted by '_'
     feedback.fill('_', feedback.length, 4 - feedback.length)
 
-    feedback = feedback.shuffle
-
     print ' ( '
 
     feedback.each { |peg| print "#{peg} " }
@@ -50,7 +48,9 @@ class Board
     (0...@guesses.length).each do |i|
       print_guess(@guesses[i])
 
-      print_feedback(@feedbacks[i])
+      print_feedback(@feedbacks[i]) unless @feedbacks[i].nil?
+
+      print ' ( _ _ _ _ )' if @feedbacks[i].nil?
 
       puts ''
     end
