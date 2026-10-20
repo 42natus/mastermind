@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# This is the board upon which the game will be played. The codemaker sets the
-# code and the codebreaker makes guesses on this board.
+# This is the board upon which the game will be played. The code maker sets the
+# code and the code breaker makes guesses on this board.
 class Board
   attr_reader :pegs, :code, :guesses, :feedbacks
 
@@ -48,7 +48,9 @@ class Board
     (0...@guesses.length).each do |i|
       print_guess(@guesses[i])
 
-      print_feedback(@feedbacks[i]) unless @feedbacks[i].nil?
+      feedback = @feedbacks[i]
+
+      print_feedback(feedback) unless feedback.nil?
 
       print ' ( _ _ _ _ )' if @feedbacks[i].nil?
 
@@ -60,7 +62,7 @@ class Board
     number.times { puts '| _ _ _ _ | ( _ _ _ _ )' }
   end
 
-  def reveal_code
+  def reveal
     print '[ '
 
     code.each { |peg| print "#{peg} " }
@@ -68,15 +70,15 @@ class Board
     print "]\n"
   end
 
-  def display(gameover: false)
+  def display(show_code: false)
     puts "\n----- MASTERMIND -----"
 
     print_pegs
 
     print_blanks(12 - @guesses.length)
 
-    if gameover
-      reveal_code
+    if show_code
+      reveal
     else
       puts '[ # # # # ]'
     end

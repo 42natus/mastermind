@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# require 'pry-byebug'
 require_relative '../verifiable'
 
 module HumanPlayer
@@ -17,6 +16,7 @@ module HumanPlayer
 
       until valid_code?(code)
         print 'Enter your code: '
+
         code = sanitize(gets.chomp)
       end
 
@@ -27,10 +27,12 @@ module HumanPlayer
       feedback = []
 
       guess = board.guesses.last.clone
+
       code = board.code.clone
 
       until valid_feedback?(feedback, guess, code)
         print 'Give feedback: '
+
         feedback = sanitize(gets.chomp)
       end
 

@@ -16,17 +16,17 @@ class Game
   end
 
   def assign_roles(choice, board)
-    return [ComputerPlayer::CodeMaker.new, HumanPlayer::CodeBreaker.new] if
+    return [ComputerPlayer::CodeMaker.new, HumanPlayer::CodeBreaker.new(board)] if
     choice == '1'
 
     [HumanPlayer::CodeMaker.new, ComputerPlayer::CodeBreaker.new(board)]
   end
 
-  def play_round
+  def human_play_round
     12.times do
       @board.display
 
-      @code_breaker.guess(@board)
+      @code_breaker.guess
 
       @code_maker.give_feedback(@board)
 
@@ -38,29 +38,45 @@ class Game
     end
   end
 
-  def computer_gameover_message(correct_guess)
-    return "\nBetter luck next time..." if correct_guess
+  def computer_play_round
+    12.times do
+      @code_breaker.guess
 
-    "\nYou actually outsmarted the computer. Bravo!"
+      @board.display(show_code: true)
+
+      @code_maker.give_feedback(@board)
+
+      next unless @board.feedbacks.last.eql?(%w[x x x x])
+
+      @code_breaker.correct_guess = true
+
+      break
+    end
   end
 
-  def human_gameover_message(correct_guess)
-    return "\nBRAVO! YOU GOT IT!!" if correct_guess
+  def gameover_msg(player)
+    if player.to_s == 'human' && player.correct_guess
+      return "\nBravo! You cracked the code!"
+    elsif player.to_s == 'human' && !player.correct_guess
+      return "\nBetter luck next time..."
+    elsif player.to_s == 'computer' && player.correct_guess
+      return "\nThe computer cracked it! Better luck next time..."
+    end
 
-    "\nBetter luck next time..."
+    "\nYou beat the computer. Bravo!"
   end
 
   def play
+    @board.display if @code_breaker.to_s == 'computer'
+
     @code_maker.place_code(@board)
 
-    play_round
+    computer_play_round if @code_breaker.to_s == 'computer'
 
-    @board.display(gameover: true)
+    human_play_round if @code_breaker.to_s == 'human'
 
-    puts human_gameover_message(@code_breaker.correct_guess) if
-    @code_breaker.to_s == 'human'
+    @board.display(show_code: true)
 
-    puts computer_gameover_message(@code_breaker.correct_guess) if
-    @code_breaker.to_s == 'computer'
+    puts gameover_msg(@code_breaker)
   end
 end

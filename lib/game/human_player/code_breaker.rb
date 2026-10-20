@@ -6,7 +6,8 @@ module HumanPlayer
   class CodeBreaker
     attr_accessor :correct_guess
 
-    def initialize
+    def initialize(board)
+      @board = board
       @correct_guess = false
     end
 
@@ -22,16 +23,16 @@ module HumanPlayer
       guess.length == 4 && guess.none? { |ch| !pegs.include?(ch) }
     end
 
-    def guess(board)
+    def guess
       guess = []
-      pegs = board.pegs
+      pegs = @board.pegs
 
       until valid?(guess, pegs)
         print 'Enter your guess: '
         guess = sanitize(gets.chomp)
       end
 
-      board.store_guess(guess)
+      @board.store_guess(guess)
     end
   end
 end

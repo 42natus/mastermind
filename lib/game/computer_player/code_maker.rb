@@ -3,8 +3,8 @@
 require_relative '../verifiable'
 
 module ComputerPlayer
-  # The computer as the code maker uses a random combination of the pegs
-  # available to set a code and gives feedback on the guess of the code breaker.
+  # The program uses a random combination of the pegs available to set a code
+  # and gives feedback on the guess of the code breaker.
   class CodeMaker
     include Verifiable
 
@@ -34,7 +34,7 @@ module ComputerPlayer
     end
 
     def give_feedback(board)
-      last_guess = board.guesses[-1]
+      last_guess = board.guesses.last
 
       code = board.code.clone
 

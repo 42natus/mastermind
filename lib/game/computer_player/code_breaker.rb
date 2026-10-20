@@ -1,53 +1,46 @@
 # frozen_string_literal: true
 
-# require 'pry-byebug'
 require_relative '../verifiable'
 
 module ComputerPlayer
-  # The computer as the code breaker uses some algorithm to eventually deduce
-  # the code set by the code maker
+  # The program uses the Swaszek (1999–2000) algorithm to deduce the code set by
+  # the code maker
   class CodeBreaker
     include Verifiable
 
     attr_accessor :correct_guess
 
     def initialize(board)
-      @correct_guess = false
+      @board = board
       @candidates = []
-      board.pegs.repeated_permutation(4) { |candidate| @candidates << candidate }
+      @board.pegs.repeated_permutation(4) { |candidate| @candidates << candidate }
+      @correct_guess = false
     end
 
     def to_s
       'computer'
     end
 
-    def eliminate_candidates(feedback, code)
-      feedback.delete_if { |ch| ch == '_' }
+    def eliminate_candidates
+      feedback = @board.feedbacks.last
+      guess = @board.guesses.last
 
       @candidates = @candidates.select do |candidate|
-        check_pegs(candidate, code) == feedback
+        check_pegs(candidate, guess).sort == feedback.sort
       end
-
-      @candidates
     end
 
-    def guess(board)
-      feedback = board.feedbacks.last
-      guess = board.guesses.last
+    def guess
+      eliminate_candidates if @board.feedbacks.any?
 
-      eliminate_candidates(feedback, guess) if board.feedbacks.any?
-
-      idx = (rand * @candidates.size).floor
-
-      unless board.guesses.empty?
-        board.store_guess(@candidates[idx])
-        @candidates[idx] = @candidates.last
-        @candidates.pop
+      if @board.guesses.any?
+        idx = (rand * @candidates.size).floor
+        @board.store_guess(@candidates[idx])
+        # copy last candidate into used position then remove last candidate
+        @candidates[idx] = @candidates.pop
       end
 
-      board.store_guess(%w[1 1 2 2]) if board.guesses.empty?
-
-      board.display
+      @board.store_guess(%w[1 1 2 2]) if @board.guesses.empty?
     end
   end
 end
