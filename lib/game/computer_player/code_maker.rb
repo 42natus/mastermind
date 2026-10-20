@@ -8,8 +8,23 @@ module ComputerPlayer
   class CodeMaker
     include Verifiable
 
+    def repeat_pegs(pegs)
+      code = []
+
+      4.times { code << pegs[(rand * 6).floor] }
+
+      code
+    end
+
     def place_code(board)
-      code = board.pegs.sample(4)
+      pegs = board.pegs
+
+      # randomly repeat pegs in the code or not
+      mode = (rand * 2).floor
+
+      code = pegs.sample(4) if mode.zero?
+
+      code = repeat_pegs(pegs) if mode == 1
 
       board.store_code(code)
     end
