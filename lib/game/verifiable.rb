@@ -21,7 +21,11 @@ module Verifiable
       feedback.push('x')
       # value ignorable cos it's been assessed — won't affect next check
       code[position] = '_'
+      pegs[position] = '_'
     end
+
+    code.delete_if { |e| e == '_' }
+    pegs.delete_if { |e| e == '_' }
 
     feedback
   end
@@ -43,6 +47,9 @@ module Verifiable
   def check_pegs(pegs, code)
     feedback = []
 
+    code = code.clone
+    pegs = pegs.clone
+
     feedback.push(correct_position(pegs, code))
 
     feedback.push(wrong_position(pegs, code))
@@ -50,11 +57,7 @@ module Verifiable
     feedback.flatten
   end
 
-  def valid_feedback?(board, feedback)
-    last_guess = board.guesses[-1]
-
-    code = board.code.clone
-
-    check_pegs(last_guess, code).sort == feedback.sort
+  def valid_feedback?(feedback, guess, code)
+    check_pegs(guess, code).sort == feedback.sort
   end
 end
