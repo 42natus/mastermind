@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module HumanPlayer
+module Human
   # The code breaker guesses by placing a combination of pegs on the board in an
   # attempt to deduce the code set by the code maker
   class CodeBreaker

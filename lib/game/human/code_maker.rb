@@ -2,7 +2,7 @@
 
 require_relative '../verifiable'
 
-module HumanPlayer
+module Human
   # The code maker uses a combination of 4 of the pegs available to set a code
   class CodeMaker
     include Verifiable

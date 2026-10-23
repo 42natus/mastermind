@@ -2,7 +2,7 @@
 
 require_relative '../verifiable'
 
-module ComputerPlayer
+module Computer
   # The program uses the Swaszek (1999–2000) algorithm to deduce the code set by
   # the code maker
   class CodeBreaker

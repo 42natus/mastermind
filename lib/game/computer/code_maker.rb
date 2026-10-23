@@ -2,7 +2,7 @@
 
 require_relative '../verifiable'
 
-module ComputerPlayer
+module Computer
   # The program uses a random combination of the pegs available to set a code
   # and gives feedback on the guess of the code breaker.
   class CodeMaker

@@ -1,24 +1,24 @@
 # frozen_string_literal: true
 
 require_relative 'game/board'
-require_relative 'game/human_player'
-require_relative 'game/human_player/code_breaker'
-require_relative 'game/human_player/code_maker'
-require_relative 'game/computer_player/code_maker'
-require_relative 'game/computer_player/code_breaker'
+require_relative 'game/human'
+require_relative 'game/human/code_breaker'
+require_relative 'game/human/code_maker'
+require_relative 'game/computer/code_maker'
+require_relative 'game/computer/code_breaker'
 
 # This controls gameplay for a full round of the game
 class Game
   def initialize
     @board = Board.new
-    @code_maker, @code_breaker = assign_roles(HumanPlayer.choose)
+    @code_maker, @code_breaker = assign_roles(Human.choose)
   end
 
   def assign_roles(choice)
-    return [ComputerPlayer::CodeMaker.new, HumanPlayer::CodeBreaker.new(@board)] if
+    return [Computer::CodeMaker.new, Human::CodeBreaker.new(@board)] if
     choice == '1'
 
-    [HumanPlayer::CodeMaker.new, ComputerPlayer::CodeBreaker.new(@board)]
+    [Human::CodeMaker.new, Computer::CodeBreaker.new(@board)]
   end
 
   def guessed_right?

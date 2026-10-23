@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # This module defines the methods available to the human player
-module HumanPlayer
+module Human
   def self.choose
     puts 'Hello! You can choose your role below: (1/2)'
     puts '1. Code breaker'
