@@ -11,7 +11,7 @@ module Computer
     def repeat_pegs(pegs)
       code = []
 
-      4.times { code << pegs[(rand * 6).floor] }
+      4.times { code << pegs[rand(0..5)] }
 
       code
     end
@@ -20,11 +20,9 @@ module Computer
       pegs = board.pegs
 
       # randomly repeat pegs in the code or not
-      mode = (rand * 2).floor
+      mode = rand.round
 
-      code = pegs.sample(4) if mode.zero?
-
-      code = repeat_pegs(pegs) if mode == 1
+      code = mode.zero? ? pegs.sample(4) : repeat_pegs(pegs)
 
       board.store_code(code)
     end
