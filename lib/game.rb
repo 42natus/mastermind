@@ -31,6 +31,8 @@ class Game
 
       @code_breaker.guess
 
+      sleep 0.5
+
       @code_maker.give_feedback(@board)
 
       next unless guessed_right?
