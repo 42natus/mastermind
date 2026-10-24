@@ -12,8 +12,7 @@ module Computer
 
     def initialize(board)
       @board = board
-      @candidates = []
-      @board.pegs.repeated_permutation(4) { |candidate| @candidates << candidate }
+      @candidates = @board.pegs.repeated_permutation(4).to_a
       @correct_guess = false
     end
 
